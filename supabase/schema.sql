@@ -36,27 +36,33 @@ create table if not exists contacts (
 -- =====================
 -- DEALS / PROJECTS
 -- =====================
-create type deal_stage as enum (
-  'lead_captured',
-  'discovery_scoping',
-  'proposal_sent',
-  'negotiation',
-  'closed_won',
-  'closed_lost'
-);
+do $$ begin
+  create type deal_stage as enum (
+    'lead_captured',
+    'discovery_scoping',
+    'proposal_sent',
+    'negotiation',
+    'closed_won',
+    'closed_lost'
+  );
+exception when duplicate_object then null;
+end $$;
 
-create type project_type as enum (
-  'Branding',
-  'Web Design',
-  'Campaign',
-  'Retainer',
-  'Social Media',
-  'Video Production',
-  'Photography',
-  'Copywriting',
-  'Strategy',
-  'Other'
-);
+do $$ begin
+  create type project_type as enum (
+    'Branding',
+    'Web Design',
+    'Campaign',
+    'Retainer',
+    'Social Media',
+    'Video Production',
+    'Photography',
+    'Copywriting',
+    'Strategy',
+    'Other'
+  );
+exception when duplicate_object then null;
+end $$;
 
 create table if not exists deals (
   id uuid primary key default uuid_generate_v4(),
@@ -75,14 +81,17 @@ create table if not exists deals (
 -- =====================
 -- ACTIVITIES
 -- =====================
-create type activity_type as enum (
-  'Email',
-  'Call',
-  'Pitch Meeting',
-  'Review',
-  'Note',
-  'Task Completed'
-);
+do $$ begin
+  create type activity_type as enum (
+    'Email',
+    'Call',
+    'Pitch Meeting',
+    'Review',
+    'Note',
+    'Task Completed'
+  );
+exception when duplicate_object then null;
+end $$;
 
 create table if not exists activities (
   id uuid primary key default uuid_generate_v4(),
@@ -131,15 +140,19 @@ begin
 end;
 $$ language plpgsql;
 
+drop trigger if exists accounts_updated_at on accounts;
 create trigger accounts_updated_at before update on accounts
   for each row execute procedure update_updated_at();
 
+drop trigger if exists contacts_updated_at on contacts;
 create trigger contacts_updated_at before update on contacts
   for each row execute procedure update_updated_at();
 
+drop trigger if exists deals_updated_at on deals;
 create trigger deals_updated_at before update on deals
   for each row execute procedure update_updated_at();
 
+drop trigger if exists tasks_updated_at on tasks;
 create trigger tasks_updated_at before update on tasks
   for each row execute procedure update_updated_at();
 
