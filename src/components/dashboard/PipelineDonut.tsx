@@ -6,12 +6,12 @@ import { formatCurrency } from '@/lib/utils/format';
 import { useMemo } from 'react';
 
 const stageColors: Record<string, string> = {
-  lead_captured: '#94a3b8',
+  lead_captured:     '#6b7280',
   discovery_scoping: '#60a5fa',
-  proposal_sent: '#a78bfa',
-  negotiation: '#fbbf24',
-  closed_won: '#34d399',
-  closed_lost: '#f87171',
+  proposal_sent:     '#fb923c',
+  negotiation:       '#fbbf24',
+  closed_won:        '#34d399',
+  closed_lost:       '#e11d48',
 };
 
 export function PipelineDonut({ deals }: { deals: Deal[] }) {
@@ -27,9 +27,9 @@ export function PipelineDonut({ deals }: { deals: Deal[] }) {
   }, [deals]);
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
-      <h3 className="text-sm font-semibold text-slate-900 dark:text-white mb-1">Pipeline by Stage</h3>
-      <p className="text-xs text-slate-500 dark:text-slate-400 mb-4">Value distribution across stages</p>
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-5 shadow-sm">
+      <h3 className="text-sm font-semibold text-gray-900 dark:text-white mb-1">Pipeline by Stage</h3>
+      <p className="text-xs text-gray-500 dark:text-gray-400 mb-4">Value distribution across stages</p>
       <ResponsiveContainer width="100%" height={200}>
         <PieChart>
           <Pie data={data} cx="50%" cy="50%" innerRadius={55} outerRadius={80} paddingAngle={3} dataKey="value">
@@ -38,7 +38,7 @@ export function PipelineDonut({ deals }: { deals: Deal[] }) {
             ))}
           </Pie>
           <Tooltip
-            contentStyle={{ background: 'rgb(15 23 42)', border: 'none', borderRadius: '10px', padding: '10px 14px', fontSize: '12px', color: '#e2e8f0' }}
+            contentStyle={{ background: '#111827', border: 'none', borderRadius: '10px', padding: '10px 14px', fontSize: '12px', color: '#f3f4f6' }}
             formatter={(value: number, name: string) => [formatCurrency(value), name]}
           />
           <Legend iconType="circle" iconSize={8} wrapperStyle={{ fontSize: '11px' }} />

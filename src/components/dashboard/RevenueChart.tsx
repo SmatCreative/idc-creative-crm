@@ -34,18 +34,18 @@ export function RevenueChart({ deals }: RevenueChartProps) {
   }, [deals]);
 
   return (
-    <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm">
+    <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-5 shadow-sm">
       <div className="flex items-center justify-between mb-5">
         <div>
-          <h3 className="text-sm font-semibold text-slate-900 dark:text-white">Revenue Forecast</h3>
-          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">Monthly pipeline & closed revenue</p>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-white">Revenue Forecast</h3>
+          <p className="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Monthly pipeline & closed revenue</p>
         </div>
-        <div className="flex items-center gap-4 text-xs text-slate-500 dark:text-slate-400">
+        <div className="flex items-center gap-4 text-xs text-gray-500 dark:text-gray-400">
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-1.5 rounded-full bg-brand-500 inline-block" /> Closed
+            <span className="w-3 h-1.5 rounded-full bg-brand-600 inline-block" /> Closed
           </span>
           <span className="flex items-center gap-1.5">
-            <span className="w-3 h-1.5 rounded-full bg-blue-300 inline-block" /> Pipeline
+            <span className="w-3 h-1.5 rounded-full bg-gray-300 inline-block" /> Pipeline
           </span>
         </div>
       </div>
@@ -53,23 +53,23 @@ export function RevenueChart({ deals }: RevenueChartProps) {
         <AreaChart data={data} margin={{ top: 5, right: 5, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorWon" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#6366f1" stopOpacity={0.15} />
-              <stop offset="95%" stopColor="#6366f1" stopOpacity={0} />
+              <stop offset="5%"  stopColor="#e11d48" stopOpacity={0.18} />
+              <stop offset="95%" stopColor="#e11d48" stopOpacity={0} />
             </linearGradient>
             <linearGradient id="colorPipeline" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="5%" stopColor="#93c5fd" stopOpacity={0.15} />
-              <stop offset="95%" stopColor="#93c5fd" stopOpacity={0} />
+              <stop offset="5%"  stopColor="#9ca3af" stopOpacity={0.15} />
+              <stop offset="95%" stopColor="#9ca3af" stopOpacity={0} />
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,0.1)" />
-          <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} />
-          <YAxis tick={{ fontSize: 11, fill: '#94a3b8' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
+          <CartesianGrid strokeDasharray="3 3" stroke="rgba(156,163,175,0.12)" />
+          <XAxis dataKey="month" tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} />
+          <YAxis tick={{ fontSize: 11, fill: '#9ca3af' }} axisLine={false} tickLine={false} tickFormatter={(v) => `$${(v / 1000).toFixed(0)}k`} />
           <Tooltip
-            contentStyle={{ background: 'rgb(15 23 42)', border: 'none', borderRadius: '10px', padding: '10px 14px', fontSize: '12px', color: '#e2e8f0' }}
+            contentStyle={{ background: '#111827', border: 'none', borderRadius: '10px', padding: '10px 14px', fontSize: '12px', color: '#f3f4f6' }}
             formatter={(value: number, name: string) => [formatCurrency(value), name === 'won' ? 'Closed Revenue' : 'Pipeline']}
           />
-          <Area type="monotone" dataKey="pipeline" stroke="#93c5fd" strokeWidth={2} fill="url(#colorPipeline)" />
-          <Area type="monotone" dataKey="won" stroke="#6366f1" strokeWidth={2} fill="url(#colorWon)" />
+          <Area type="monotone" dataKey="pipeline" stroke="#9ca3af" strokeWidth={2} fill="url(#colorPipeline)" />
+          <Area type="monotone" dataKey="won"      stroke="#e11d48" strokeWidth={2} fill="url(#colorWon)" />
         </AreaChart>
       </ResponsiveContainer>
     </div>

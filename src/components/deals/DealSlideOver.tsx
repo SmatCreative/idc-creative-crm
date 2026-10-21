@@ -51,7 +51,7 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
       </div>
 
       {/* Tabs */}
-      <div className="flex gap-1 p-1 rounded-xl bg-slate-100 dark:bg-slate-800 mb-5">
+      <div className="flex gap-1 p-1 rounded-xl bg-gray-100 dark:bg-gray-800 mb-5">
         {tabs.map((t) => (
           <button
             key={t}
@@ -59,8 +59,8 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
             className={cn(
               'flex-1 py-1.5 text-xs font-medium rounded-lg transition-all',
               tab === t
-                ? 'bg-white dark:bg-slate-700 text-slate-900 dark:text-white shadow-sm'
-                : 'text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300',
+                ? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-white shadow-sm'
+                : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300',
             )}
           >
             {t}
@@ -68,7 +68,7 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
               <span className="ml-1.5 text-[10px] bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 rounded-full px-1.5">{activities.length}</span>
             )}
             {t === 'Tasks' && tasks.length > 0 && (
-              <span className="ml-1.5 text-[10px] bg-slate-200 dark:bg-slate-700 text-slate-600 dark:text-slate-300 rounded-full px-1.5">{tasks.filter(t => !t.completed).length}</span>
+              <span className="ml-1.5 text-[10px] bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full px-1.5">{tasks.filter(t => !t.completed).length}</span>
             )}
           </button>
         ))}
@@ -84,18 +84,18 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
             <InfoItem icon={<Calendar size={14} />} label="Target Launch" value={formatDate(deal.target_launch_date)} />
           </div>
           {deal.description && (
-            <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
-              <p className="text-xs font-medium text-slate-500 dark:text-slate-400 mb-1">Description</p>
-              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">{deal.description}</p>
+            <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Description</p>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{deal.description}</p>
             </div>
           )}
           {deal.stage === 'closed_lost' && deal.closed_lost_reason && (
-            <div className="p-3 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-100 dark:border-red-900">
-              <p className="text-xs font-medium text-red-500 mb-1">Lost Reason</p>
-              <p className="text-sm text-red-700 dark:text-red-400">{deal.closed_lost_reason}</p>
+            <div className="p-3 rounded-xl bg-brand-50 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900">
+              <p className="text-xs font-medium text-brand-600 mb-1">Lost Reason</p>
+              <p className="text-sm text-brand-700 dark:text-brand-400">{deal.closed_lost_reason}</p>
             </div>
           )}
-          <p className="text-[11px] text-slate-400 dark:text-slate-500">Created {formatDate(deal.created_at)}</p>
+          <p className="text-[11px] text-gray-400 dark:text-gray-500">Created {formatDate(deal.created_at)}</p>
         </div>
       )}
 
@@ -118,12 +118,12 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
 
 function InfoItem({ icon, label, value }: { icon: React.ReactNode; label: string; value: React.ReactNode }) {
   return (
-    <div className="p-3 rounded-xl bg-slate-50 dark:bg-slate-800">
-      <div className="flex items-center gap-1.5 text-slate-400 dark:text-slate-500 mb-1">
+    <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
+      <div className="flex items-center gap-1.5 text-gray-400 dark:text-gray-500 mb-1">
         {icon}
         <span className="text-[10px] font-medium uppercase tracking-wider">{label}</span>
       </div>
-      <div className="text-sm font-medium text-slate-800 dark:text-slate-200">{value}</div>
+      <div className="text-sm font-medium text-gray-800 dark:text-gray-200">{value}</div>
     </div>
   );
 }

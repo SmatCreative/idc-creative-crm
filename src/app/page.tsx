@@ -33,7 +33,7 @@ export default function DashboardPage() {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
-        <div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" />
+        <div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
@@ -89,16 +89,16 @@ export default function DashboardPage() {
           value={String(accounts.length)}
           change="Client companies"
           icon={Building2}
-          iconColor="text-violet-600 dark:text-violet-400"
-          iconBg="bg-violet-50 dark:bg-violet-950"
+          iconColor="text-gray-600 dark:text-gray-400"
+          iconBg="bg-gray-100 dark:bg-gray-800"
         />
         <StatCard
           title="Open Tasks"
           value={String(stats.pendingTasks)}
           change="Across all deals"
           icon={CheckSquare}
-          iconColor="text-teal-600 dark:text-teal-400"
-          iconBg="bg-teal-50 dark:bg-teal-950"
+          iconColor="text-brand-600 dark:text-brand-400"
+          iconBg="bg-brand-50 dark:bg-brand-950"
         />
       </div>
 

@@ -23,20 +23,20 @@ export function SlideOver({ open, onClose, title, subtitle, children, width = 'l
 
   return (
     <div className={cn('fixed inset-0 z-50 overflow-hidden', !open && 'pointer-events-none')}>
-      <div className={cn('absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity duration-300', open ? 'opacity-100' : 'opacity-0')} onClick={onClose} />
+      <div className={cn('absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300', open ? 'opacity-100' : 'opacity-0')} onClick={onClose} />
       <div className="absolute inset-y-0 right-0 flex">
         <div className={cn(
           'relative w-screen transition-transform duration-300 ease-in-out',
           widths[width],
           open ? 'translate-x-0' : 'translate-x-full',
         )}>
-          <div className="flex h-full flex-col bg-white dark:bg-slate-900 shadow-2xl border-l border-slate-200 dark:border-slate-700">
-            <div className="flex items-start justify-between px-6 py-5 border-b border-slate-100 dark:border-slate-800">
+          <div className="flex h-full flex-col bg-white dark:bg-gray-900 shadow-2xl border-l border-gray-200 dark:border-gray-800">
+            <div className="flex items-start justify-between px-6 py-5 border-b border-gray-100 dark:border-gray-800">
               <div>
-                <h2 className="text-lg font-semibold text-slate-900 dark:text-white">{title}</h2>
-                {subtitle && <p className="text-sm text-slate-500 dark:text-slate-400 mt-0.5">{subtitle}</p>}
+                <h2 className="text-lg font-semibold text-gray-900 dark:text-white">{title}</h2>
+                {subtitle && <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">{subtitle}</p>}
               </div>
-              <button onClick={onClose} className="ml-4 mt-0.5 p-1.5 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+              <button onClick={onClose} className="ml-4 mt-0.5 p-1.5 rounded-lg text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
                 <X size={18} />
               </button>
             </div>

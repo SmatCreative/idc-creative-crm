@@ -52,13 +52,13 @@ export default function DealsPage() {
       {/* Filters */}
       <div className="flex gap-3 mb-5">
         <div className="relative flex-1 max-w-xs">
-          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+          <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
           <Input className="pl-8" placeholder="Search deals…" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <select
           value={filterStage}
           onChange={(e) => setFilterStage(e.target.value as DealStage | '')}
-          className="px-3 py-2 text-sm rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
+          className="px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-500"
         >
           <option value="">All Stages</option>
           {DEAL_STAGES.map((s) => <option key={s.key} value={s.key}>{s.label}</option>)}
@@ -66,38 +66,38 @@ export default function DealsPage() {
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (
         <EmptyState icon={Briefcase} title="No deals found" description="Create your first deal or adjust your filters." action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Deal</Button>} />
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800">
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Deal</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Type</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Stage</th>
-                <th className="text-right px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Value</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Launch</th>
+              <tr className="border-b border-gray-100 dark:border-gray-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Deal</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Stage</th>
+                <th className="text-right px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Value</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Launch</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
               {filtered.map((deal) => (
                 <tr
                   key={deal.id}
                   onClick={() => setSelectedDeal(deal)}
-                  className="hover:bg-slate-50 dark:hover:bg-slate-800/50 cursor-pointer transition-colors"
+                  className="hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer transition-colors"
                 >
                   <td className="px-5 py-3.5">
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{deal.deal_name}</p>
-                    <p className="text-xs text-slate-400 dark:text-slate-500">{deal.account?.company_name ?? '—'}</p>
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">{deal.deal_name}</p>
+                    <p className="text-xs text-gray-400 dark:text-gray-500">{deal.account?.company_name ?? '—'}</p>
                   </td>
                   <td className="px-5 py-3.5"><ProjectTypeBadge type={deal.project_type} /></td>
                   <td className="px-5 py-3.5"><StageBadge stage={deal.stage} /></td>
                   <td className="px-5 py-3.5 text-right">
-                    <span className="text-sm font-bold text-slate-800 dark:text-slate-200">{formatCurrency(deal.estimated_value)}</span>
+                    <span className="text-sm font-bold text-gray-800 dark:text-gray-200">{formatCurrency(deal.estimated_value)}</span>
                   </td>
-                  <td className="px-5 py-3.5 text-sm text-slate-500 dark:text-slate-400">{formatDate(deal.target_launch_date)}</td>
+                  <td className="px-5 py-3.5 text-sm text-gray-500 dark:text-gray-400">{formatDate(deal.target_launch_date)}</td>
                 </tr>
               ))}
             </tbody>

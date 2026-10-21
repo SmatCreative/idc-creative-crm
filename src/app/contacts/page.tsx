@@ -46,64 +46,64 @@ export default function ContactsPage() {
       />
 
       <div className="relative max-w-xs mb-5">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <Input className="pl-8" placeholder="Search contacts…" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (
         <EmptyState icon={Users} title="No contacts found" description="Add people from your client companies." action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> Add Contact</Button>} />
       ) : (
-        <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 overflow-hidden shadow-sm">
+        <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-slate-100 dark:border-slate-800">
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Contact</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Account</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Email</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase tracking-wider">Phone</th>
+              <tr className="border-b border-gray-100 dark:border-gray-800">
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Contact</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Account</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Email</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Phone</th>
                 <th className="w-12" />
               </tr>
             </thead>
-            <tbody className="divide-y divide-slate-50 dark:divide-slate-800">
+            <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
               {filtered.map((contact) => (
-                <tr key={contact.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/50 transition-colors group">
+                <tr key={contact.id} className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors group">
                   <td className="px-5 py-3.5">
                     <div className="flex items-center gap-3">
                       <Avatar name={contact.full_name} size="sm" />
                       <div>
-                        <p className="text-sm font-semibold text-slate-900 dark:text-white">{contact.full_name}</p>
-                        {contact.role && <p className="text-xs text-slate-400 dark:text-slate-500">{contact.role}</p>}
+                        <p className="text-sm font-semibold text-gray-900 dark:text-white">{contact.full_name}</p>
+                        {contact.role && <p className="text-xs text-gray-400 dark:text-gray-500">{contact.role}</p>}
                       </div>
                     </div>
                   </td>
                   <td className="px-5 py-3.5">
                     {contact.account ? (
-                      <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
-                        <Building2 size={12} className="text-slate-400" />
+                      <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
+                        <Building2 size={12} className="text-gray-400" />
                         {contact.account.company_name}
                       </div>
-                    ) : <span className="text-slate-300 dark:text-slate-600">—</span>}
+                    ) : <span className="text-gray-300 dark:text-gray-600">—</span>}
                   </td>
                   <td className="px-5 py-3.5">
                     {contact.email ? (
                       <a href={`mailto:${contact.email}`} className="flex items-center gap-1.5 text-sm text-brand-600 dark:text-brand-400 hover:underline">
                         <Mail size={12} /> {contact.email}
                       </a>
-                    ) : <span className="text-slate-300 dark:text-slate-600">—</span>}
+                    ) : <span className="text-gray-300 dark:text-gray-600">—</span>}
                   </td>
                   <td className="px-5 py-3.5">
                     {contact.phone ? (
-                      <div className="flex items-center gap-1.5 text-sm text-slate-600 dark:text-slate-400">
+                      <div className="flex items-center gap-1.5 text-sm text-gray-600 dark:text-gray-400">
                         <Phone size={12} /> {contact.phone}
                       </div>
-                    ) : <span className="text-slate-300 dark:text-slate-600">—</span>}
+                    ) : <span className="text-gray-300 dark:text-gray-600">—</span>}
                   </td>
                   <td className="px-3 py-3.5">
                     <button
                       onClick={() => setEditing(contact)}
-                      className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                      className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                     >
                       <Edit2 size={13} />
                     </button>

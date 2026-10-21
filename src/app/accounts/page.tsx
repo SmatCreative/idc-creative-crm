@@ -42,37 +42,37 @@ export default function AccountsPage() {
       />
 
       <div className="relative max-w-xs mb-5">
-        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400" />
+        <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
         <Input className="pl-8" placeholder="Search accounts…" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
       {loading ? (
-        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-500 border-t-transparent rounded-full animate-spin" /></div>
+        <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (
         <EmptyState icon={Building2} title="No accounts found" description="Add your first client account." action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Account</Button>} />
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
           {filtered.map((account) => (
-            <div key={account.id} className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-100 dark:border-slate-800 p-5 shadow-sm hover:shadow-md transition-shadow group">
+            <div key={account.id} className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 p-5 shadow-sm hover:shadow-md transition-shadow group">
               <div className="flex items-start justify-between mb-3">
                 <div className="flex items-center gap-3">
                   <Avatar name={account.company_name} size="md" />
                   <div>
-                    <p className="text-sm font-semibold text-slate-900 dark:text-white">{account.company_name}</p>
-                    {account.industry && <p className="text-xs text-slate-400 dark:text-slate-500">{account.industry}</p>}
+                    <p className="text-sm font-semibold text-gray-900 dark:text-white">{account.company_name}</p>
+                    {account.industry && <p className="text-xs text-gray-400 dark:text-gray-500">{account.industry}</p>}
                   </div>
                 </div>
                 <button
                   onClick={() => setEditing(account)}
-                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-slate-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all"
+                  className="opacity-0 group-hover:opacity-100 p-1.5 rounded-lg text-gray-400 hover:text-brand-600 dark:hover:text-brand-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all"
                 >
                   <Edit2 size={13} />
                 </button>
               </div>
-              <div className="flex items-center justify-between pt-3 border-t border-slate-50 dark:border-slate-800">
+              <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-gray-800">
                 <div>
-                  <p className="text-xs text-slate-400 dark:text-slate-500">Lifetime Value</p>
-                  <p className="text-base font-bold text-slate-800 dark:text-slate-200">{formatCurrency(account.total_lifetime_value)}</p>
+                  <p className="text-xs text-gray-400 dark:text-gray-500">Lifetime Value</p>
+                  <p className="text-base font-bold text-gray-800 dark:text-gray-200">{formatCurrency(account.total_lifetime_value)}</p>
                 </div>
                 {account.website && (
                   <a href={`https://${account.website}`} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 text-xs text-brand-600 dark:text-brand-400 hover:underline">
