@@ -4,7 +4,7 @@ import { usePathname } from 'next/navigation';
 import { useState, useEffect } from 'react';
 import {
   Zap, LayoutDashboard, Kanban, Briefcase, Building2,
-  Users, CheckSquare, Truck, MessageSquare, Sun, Moon,
+  Users, CheckSquare, Truck, MessageSquare, Sun, Moon, Calendar,
 } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
@@ -15,6 +15,8 @@ const nav = [
   { href: '/accounts',   label: 'Clients',    icon: Building2 },
   { href: '/contacts',   label: 'Contacts',   icon: Users },
   { href: '/tasks',      label: 'Tasks',      icon: CheckSquare },
+  { href: '/calendar',   label: 'Calendar',   icon: Calendar },
+  { href: '/messages',   label: 'Messages',   icon: MessageSquare },
   { href: '/suppliers',  label: 'Suppliers',  icon: Truck },
 ];
 
