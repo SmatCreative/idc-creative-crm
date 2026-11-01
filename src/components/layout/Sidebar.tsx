@@ -22,19 +22,28 @@ const nav = [
 ];
 
 const LogoIcon = () => (
-  <svg viewBox="0 0 32 32" className="w-8 h-8 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-    <defs><clipPath id="lp"><polygon points="4,2 28,2 26,30 2,30"/></clipPath></defs>
-    <polygon points="4,2 28,2 26,30 2,30" fill="#000"/>
-    <text x="15" y="24" fontSize="26" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
+  <svg viewBox="0 0 100 100" className="w-9 h-9 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <clipPath id="lp">
+        <polygon points="18,4 92,4 82,96 8,96"/>
+      </clipPath>
+    </defs>
+    {/* parallelogram background */}
+    <polygon points="18,4 92,4 82,96 8,96" fill="#000"/>
+    {/* striped S — layers from thick to thin */}
+    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
       textAnchor="middle" clipPath="url(#lp)"
-      stroke="white" strokeWidth="6" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="15" y="24" fontSize="26" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
+      stroke="white" strokeWidth="22" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
+    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
       textAnchor="middle" clipPath="url(#lp)"
-      stroke="black" strokeWidth="4.5" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="15" y="24" fontSize="26" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
+      stroke="black" strokeWidth="16" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
+    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
       textAnchor="middle" clipPath="url(#lp)"
-      stroke="white" strokeWidth="3" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="15" y="24" fontSize="26" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
+      stroke="white" strokeWidth="10" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
+    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
+      textAnchor="middle" clipPath="url(#lp)"
+      stroke="black" strokeWidth="5" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
+    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
       textAnchor="middle" clipPath="url(#lp)" fill="black">S</text>
   </svg>
 );
@@ -98,8 +107,7 @@ export function Sidebar() {
         <div className="flex items-center gap-2">
           <LogoIcon />
           <div>
-            <p className="text-sm font-bold text-white leading-tight">SmatCreative</p>
-            <p className="text-[10px] text-gray-500 leading-tight">CRM</p>
+            <p className="text-sm font-bold text-white leading-tight">SmatCreative CRM</p>
           </div>
         </div>
       </div>
@@ -127,8 +135,7 @@ export function Sidebar() {
           <div className="flex items-center gap-3">
             <LogoIcon />
             <div>
-              <p className="text-sm font-bold text-white leading-tight">SmatCreative</p>
-              <p className="text-[10px] text-gray-500 leading-tight">CRM</p>
+              <p className="text-sm font-bold text-white leading-tight">SmatCreative CRM</p>
             </div>
           </div>
           {/* Close button — mobile only */}

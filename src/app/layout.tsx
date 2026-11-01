@@ -51,8 +51,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className="bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100 min-h-screen">
         <ServiceWorker />
         <Sidebar />
-        <main className="md:ml-64 pt-14 md:pt-0 min-h-screen">
-          <div className="px-4 md:px-8 py-5 md:py-7 max-w-screen-2xl mx-auto">
+        <main className="md:ml-64 pt-14 md:pt-0 min-h-screen flex flex-col">
+          <div className="flex-1 px-4 md:px-8 py-5 md:py-7 max-w-screen-2xl w-full mx-auto flex flex-col">
             {children}
           </div>
         </main>

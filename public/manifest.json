@@ -1,7 +1,7 @@
 {
   "name": "SmatCreative CRM",
-  "short_name": "SmatCRM",
-  "description": "Creative Agency CRM — Design, Print, Signage, Social",
+  "short_name": "SmatCreative",
+  "description": "SmatCreative CRM — Design, Print, Signage, Social",
   "start_url": "/",
   "display": "standalone",
   "orientation": "portrait-primary",

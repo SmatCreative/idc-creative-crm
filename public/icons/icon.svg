@@ -1,28 +1,27 @@
 <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
   <defs>
-    <clipPath id="para">
-      <polygon points="75,50 450,50 437,462 62,462"/>
+    <clipPath id="p">
+      <polygon points="90,24 470,24 422,488 40,488"/>
     </clipPath>
   </defs>
-  <!-- Black parallelogram background -->
-  <polygon points="75,50 450,50 437,462 62,462" fill="#000"/>
-  <!-- Striped S: layers from thick to thin, alternating black/white -->
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        stroke="white"  stroke-width="72" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        stroke="black"  stroke-width="56" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        stroke="white"  stroke-width="40" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        stroke="black"  stroke-width="26" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        stroke="white"  stroke-width="14" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
-  <text x="256" y="340" font-size="360" font-weight="900" font-family="Impact, Arial Black, sans-serif"
-        text-anchor="middle" clip-path="url(#para)"
-        fill="black">S</text>
+  <!-- Parallelogram background -->
+  <polygon points="90,24 470,24 422,488 40,488" fill="#000"/>
+  <!-- Striped S (6 layers: outer → inner, white/black alternating) -->
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)"
+    stroke="white"  stroke-width="110" stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)"
+    stroke="black"  stroke-width="84"  stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)"
+    stroke="white"  stroke-width="60"  stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)"
+    stroke="black"  stroke-width="38"  stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)"
+    stroke="white"  stroke-width="20"  stroke-linejoin="round" fill="black" paint-order="stroke fill">S</text>
+  <text x="256" y="400" font-size="450" font-weight="900" font-family="Impact, Arial Black, sans-serif"
+    text-anchor="middle" clip-path="url(#p)" fill="black">S</text>
 </svg>
