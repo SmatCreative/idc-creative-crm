@@ -22,30 +22,10 @@ const nav = [
 ];
 
 const LogoIcon = () => (
-  <svg viewBox="0 0 100 100" className="w-9 h-9 flex-shrink-0" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <clipPath id="lp">
-        <polygon points="18,4 92,4 82,96 8,96"/>
-      </clipPath>
-    </defs>
-    {/* parallelogram background */}
-    <polygon points="18,4 92,4 82,96 8,96" fill="#000"/>
-    {/* striped S — layers from thick to thin */}
-    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
-      textAnchor="middle" clipPath="url(#lp)"
-      stroke="white" strokeWidth="22" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
-      textAnchor="middle" clipPath="url(#lp)"
-      stroke="black" strokeWidth="16" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
-      textAnchor="middle" clipPath="url(#lp)"
-      stroke="white" strokeWidth="10" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
-      textAnchor="middle" clipPath="url(#lp)"
-      stroke="black" strokeWidth="5" strokeLinejoin="round" fill="black" paintOrder="stroke fill">S</text>
-    <text x="50" y="76" fontSize="88" fontWeight="900" fontFamily="Impact, Arial Black, sans-serif"
-      textAnchor="middle" clipPath="url(#lp)" fill="black">S</text>
-  </svg>
+  <div className="w-9 h-9 flex-shrink-0 rounded-lg overflow-hidden bg-white">
+    {/* eslint-disable-next-line @next/next/no-img-element */}
+    <img src="/icons/logo.png" alt="SmatCreative" className="w-full h-full object-contain" />
+  </div>
 );
 
 export function Sidebar() {
