@@ -23,7 +23,7 @@ export function useDeals(accountId?: string) {
 
   useEffect(() => { fetch(); }, [fetch]);
 
-  const create = async (values: Omit<Deal, 'id' | 'created_at' | 'updated_at' | 'account'>) => {
+  const create = async (values: Omit<Deal, 'id' | 'updated_at' | 'created_at' | 'account'> & { created_at?: string }) => {
     const { data, error } = await supabase.from('deals').insert(values).select('*, account:accounts(id, company_name)').single();
     if (error) throw error;
     setDeals((prev) => [data, ...prev]);

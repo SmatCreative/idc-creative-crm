@@ -21,7 +21,7 @@ export function useAccounts() {
 
   useEffect(() => { fetch(); }, [fetch]);
 
-  const create = async (values: Omit<Account, 'id' | 'created_at' | 'updated_at'>) => {
+  const create = async (values: Omit<Account, 'id' | 'updated_at' | 'created_at'> & { created_at?: string }) => {
     const { data, error } = await supabase.from('accounts').insert(values).select().single();
     if (error) throw error;
     setAccounts((prev) => [...prev, data]);

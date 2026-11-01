@@ -13,11 +13,13 @@ interface AccountFormProps {
 }
 
 export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
+  const todayStr = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({
     company_name: initial?.company_name ?? '',
     industry: initial?.industry ?? '',
     website: initial?.website ?? '',
     notes: initial?.notes ?? '',
+    since_date: initial?.created_at ? initial.created_at.slice(0, 10) : todayStr,
   });
   const [loading, setLoading] = useState(false);
   const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
@@ -25,7 +27,16 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    try { await onSubmit({ ...form, industry: form.industry || null, website: form.website || null, notes: form.notes || null }); }
+    try {
+      const { since_date, ...rest } = form;
+      await onSubmit({
+        ...rest,
+        industry: rest.industry || null,
+        website: rest.website || null,
+        notes: rest.notes || null,
+        created_at: since_date ? new Date(since_date).toISOString() : undefined,
+      });
+    }
     finally { setLoading(false); }
   };
 
@@ -48,6 +59,11 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
           <Input id="website" value={form.website} onChange={(e) => set('website', e.target.value)} placeholder="acme.com" />
         </FormGroup>
       </div>
+      <FormGroup>
+        <Label htmlFor="since_date">Client Since</Label>
+        <Input id="since_date" type="date" value={form.since_date} onChange={(e) => set('since_date', e.target.value)} />
+        <p className="text-[11px] text-gray-400 mt-1">When did you first work with this client? (can be in the past)</p>
+      </FormGroup>
       <FormGroup>
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" rows={3} value={form.notes} onChange={(e) => set('notes', e.target.value)} placeholder="Key contacts, backstory..." />

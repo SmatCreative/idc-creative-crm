@@ -14,6 +14,7 @@ interface DealFormProps {
 }
 
 export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit, onCancel }: DealFormProps) {
+  const todayStr = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({
     deal_name: initial?.deal_name ?? '',
     account_id: initial?.account_id ?? '',
@@ -24,6 +25,7 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
     target_launch_date: initial?.target_launch_date ?? '',
     description: initial?.description ?? '',
     closed_lost_reason: initial?.closed_lost_reason ?? '',
+    project_date: initial?.created_at ? initial.created_at.slice(0, 10) : todayStr,
   });
   const [loading, setLoading] = useState(false);
 
@@ -33,13 +35,15 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
     e.preventDefault();
     setLoading(true);
     try {
+      const { project_date, ...rest } = form;
       await onSubmit({
-        ...form,
-        account_id: form.account_id || null,
-        goal: form.goal || null,
-        target_launch_date: form.target_launch_date || null,
-        closed_lost_reason: form.closed_lost_reason || null,
-        estimated_value: Number(form.estimated_value),
+        ...rest,
+        account_id: rest.account_id || null,
+        goal: rest.goal || null,
+        target_launch_date: rest.target_launch_date || null,
+        closed_lost_reason: rest.closed_lost_reason || null,
+        estimated_value: Number(rest.estimated_value),
+        created_at: project_date ? new Date(project_date).toISOString() : undefined,
       });
     } finally {
       setLoading(false);
@@ -82,10 +86,17 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
         </FormGroup>
       </div>
 
-      <FormGroup>
-        <Label htmlFor="target_launch_date">Delivery Date</Label>
-        <Input id="target_launch_date" type="date" value={form.target_launch_date} onChange={(e) => set('target_launch_date', e.target.value)} />
-      </FormGroup>
+      <div className="grid grid-cols-2 gap-3">
+        <FormGroup>
+          <Label htmlFor="project_date">Project Date</Label>
+          <Input id="project_date" type="date" value={form.project_date} onChange={(e) => set('project_date', e.target.value)} />
+          <p className="text-[11px] text-gray-400 mt-1">When did this project start? (can be in the past)</p>
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="target_launch_date">Delivery Date</Label>
+          <Input id="target_launch_date" type="date" value={form.target_launch_date} onChange={(e) => set('target_launch_date', e.target.value)} />
+        </FormGroup>
+      </div>
 
       <FormGroup>
         <Label htmlFor="goal">Client Goal / Objective</Label>
