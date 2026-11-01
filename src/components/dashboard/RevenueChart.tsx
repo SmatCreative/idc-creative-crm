@@ -24,10 +24,10 @@ export function RevenueChart({ deals }: RevenueChartProps) {
 
     return months.map(({ month, start, end }) => {
       const won = deals
-        .filter((d) => d.stage === 'closed_won' && d.updated_at >= start.toISOString() && d.updated_at <= end.toISOString())
+        .filter((d) => d.stage === 'delivered' && d.updated_at >= start.toISOString() && d.updated_at <= end.toISOString())
         .reduce((sum, d) => sum + d.estimated_value, 0);
       const pipeline = deals
-        .filter((d) => !['closed_won', 'closed_lost'].includes(d.stage) && d.created_at >= start.toISOString() && d.created_at <= end.toISOString())
+        .filter((d) => !['delivered', 'lost'].includes(d.stage) && d.created_at >= start.toISOString() && d.created_at <= end.toISOString())
         .reduce((sum, d) => sum + d.estimated_value, 0);
       return { month, won, pipeline };
     });

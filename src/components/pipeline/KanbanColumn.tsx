@@ -8,12 +8,13 @@ import { cn } from '@/lib/utils/cn';
 import { Plus } from 'lucide-react';
 
 const columnStyles: Record<DealStage, { header: string; dot: string; border: string }> = {
-  lead_captured:     { header: 'text-gray-600 dark:text-gray-300',    dot: 'bg-gray-400',    border: 'border-gray-200 dark:border-gray-700' },
-  discovery_scoping: { header: 'text-blue-700 dark:text-blue-400',    dot: 'bg-blue-400',    border: 'border-blue-200 dark:border-blue-800' },
-  proposal_sent:     { header: 'text-orange-700 dark:text-orange-400',dot: 'bg-orange-400',  border: 'border-orange-200 dark:border-orange-800' },
-  negotiation:       { header: 'text-amber-700 dark:text-amber-400',  dot: 'bg-amber-400',   border: 'border-amber-200 dark:border-amber-800' },
-  closed_won:        { header: 'text-emerald-700 dark:text-emerald-400',dot: 'bg-emerald-400',border: 'border-emerald-200 dark:border-emerald-800' },
-  closed_lost:       { header: 'text-brand-600 dark:text-brand-400',  dot: 'bg-brand-500',   border: 'border-brand-200 dark:border-brand-900' },
+  enquiry:      { header: 'text-gray-600 dark:text-gray-300',     dot: 'bg-gray-400',     border: 'border-gray-200 dark:border-gray-700' },
+  quote_sent:   { header: 'text-blue-700 dark:text-blue-400',     dot: 'bg-blue-400',     border: 'border-blue-200 dark:border-blue-800' },
+  deposit_paid: { header: 'text-amber-700 dark:text-amber-400',   dot: 'bg-amber-400',    border: 'border-amber-200 dark:border-amber-800' },
+  in_production:{ header: 'text-orange-700 dark:text-orange-400', dot: 'bg-orange-400',   border: 'border-orange-200 dark:border-orange-800' },
+  ready:        { header: 'text-teal-700 dark:text-teal-400',     dot: 'bg-teal-400',     border: 'border-teal-200 dark:border-teal-800' },
+  delivered:    { header: 'text-emerald-700 dark:text-emerald-400',dot: 'bg-emerald-400', border: 'border-emerald-200 dark:border-emerald-800' },
+  lost:         { header: 'text-brand-600 dark:text-brand-400',   dot: 'bg-brand-500',    border: 'border-brand-200 dark:border-brand-900' },
 };
 
 interface KanbanColumnProps {
@@ -32,7 +33,6 @@ export function KanbanColumn({ stage, label, description, deals, onCardClick, on
 
   return (
     <div className="flex flex-col min-w-[260px] w-[260px]">
-      {/* Header */}
       <div className={cn('flex items-center justify-between px-3 py-3 rounded-xl mb-2 border bg-white dark:bg-gray-900', styles.border)}>
         <div>
           <div className={cn('flex items-center gap-2 text-xs font-semibold', styles.header)}>
@@ -52,7 +52,6 @@ export function KanbanColumn({ stage, label, description, deals, onCardClick, on
         </button>
       </div>
 
-      {/* Cards */}
       <div
         ref={setNodeRef}
         className={cn(

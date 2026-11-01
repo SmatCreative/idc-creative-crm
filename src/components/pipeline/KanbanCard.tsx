@@ -2,7 +2,7 @@
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import type { Deal } from '@/lib/supabase/types';
-import { ProjectTypeBadge } from '@/components/ui/Badge';
+import { ServiceTypeBadge } from '@/components/ui/Badge';
 import { formatCurrency, formatDate } from '@/lib/utils/format';
 import { Calendar, Building2, GripVertical } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
@@ -15,10 +15,7 @@ interface KanbanCardProps {
 export function KanbanCard({ deal, onClick }: KanbanCardProps) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({ id: deal.id });
 
-  const style = {
-    transform: CSS.Transform.toString(transform),
-    transition,
-  };
+  const style = { transform: CSS.Transform.toString(transform), transition };
 
   return (
     <div
@@ -50,7 +47,7 @@ export function KanbanCard({ deal, onClick }: KanbanCardProps) {
             </div>
           )}
           <div className="flex items-center justify-between mt-2.5">
-            <ProjectTypeBadge type={deal.project_type} />
+            <ServiceTypeBadge type={deal.service_type} />
             <span className="text-xs font-bold text-gray-700 dark:text-gray-300">{formatCurrency(deal.estimated_value)}</span>
           </div>
           {deal.target_launch_date && (

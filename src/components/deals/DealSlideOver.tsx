@@ -1,18 +1,19 @@
 'use client';
 import { useState } from 'react';
 import { SlideOver } from '@/components/ui/SlideOver';
-import { StageBadge, ProjectTypeBadge } from '@/components/ui/Badge';
+import { StageBadge, ServiceTypeBadge } from '@/components/ui/Badge';
 import { Button } from '@/components/ui/Button';
 import { ActivityFeed } from './ActivityFeed';
+import { DeliverablesList } from './DeliverablesList';
 import { TaskList } from '@/components/tasks/TaskList';
 import type { Deal, Account, ActivityType } from '@/lib/supabase/types';
 import { useActivities } from '@/lib/hooks/useActivities';
 import { useTasks } from '@/lib/hooks/useTasks';
 import { formatCurrency, formatDate } from '@/lib/utils/format';
-import { Building2, Calendar, DollarSign, Edit2, Layers } from 'lucide-react';
+import { Building2, Calendar, DollarSign, Edit2, Layers, Target } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
-const tabs = ['Overview', 'Activity', 'Tasks'] as const;
+const tabs = ['Overview', 'Deliverables', 'Messages', 'Tasks'] as const;
 type Tab = typeof tabs[number];
 
 interface DealSlideOverProps {
@@ -46,7 +47,7 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
       <div className="flex items-center justify-between mb-5">
         <StageBadge stage={deal.stage} />
         <Button size="sm" variant="secondary" onClick={() => onEdit?.(deal)}>
-          <Edit2 size={13} /> Edit Deal
+          <Edit2 size={13} /> Edit Project
         </Button>
       </div>
 
@@ -64,11 +65,11 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
             )}
           >
             {t}
-            {t === 'Activity' && activities.length > 0 && (
+            {t === 'Messages' && activities.length > 0 && (
               <span className="ml-1.5 text-[10px] bg-brand-100 dark:bg-brand-900/30 text-brand-600 dark:text-brand-400 rounded-full px-1.5">{activities.length}</span>
             )}
             {t === 'Tasks' && tasks.length > 0 && (
-              <span className="ml-1.5 text-[10px] bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full px-1.5">{tasks.filter(t => !t.completed).length}</span>
+              <span className="ml-1.5 text-[10px] bg-gray-200 dark:bg-gray-700 text-gray-600 dark:text-gray-300 rounded-full px-1.5">{tasks.filter((tk) => !tk.completed).length}</span>
             )}
           </button>
         ))}
@@ -79,17 +80,26 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
         <div className="space-y-4">
           <div className="grid grid-cols-2 gap-3">
             <InfoItem icon={<DollarSign size={14} />} label="Value" value={formatCurrency(deal.estimated_value)} />
-            <InfoItem icon={<Layers size={14} />} label="Type" value={<ProjectTypeBadge type={deal.project_type} />} />
-            <InfoItem icon={<Building2 size={14} />} label="Account" value={deal.account?.company_name ?? '—'} />
-            <InfoItem icon={<Calendar size={14} />} label="Target Launch" value={formatDate(deal.target_launch_date)} />
+            <InfoItem icon={<Layers size={14} />} label="Service" value={<ServiceTypeBadge type={deal.service_type} />} />
+            <InfoItem icon={<Building2 size={14} />} label="Client" value={deal.account?.company_name ?? '—'} />
+            <InfoItem icon={<Calendar size={14} />} label="Delivery Date" value={formatDate(deal.target_launch_date)} />
           </div>
+          {deal.goal && (
+            <div className="p-3 rounded-xl bg-brand-50 dark:bg-brand-950/20 border border-brand-100 dark:border-brand-900/50">
+              <div className="flex items-center gap-1.5 mb-1.5">
+                <Target size={12} className="text-brand-600" />
+                <p className="text-xs font-semibold text-brand-700 dark:text-brand-400">Client Goal</p>
+              </div>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{deal.goal}</p>
+            </div>
+          )}
           {deal.description && (
             <div className="p-3 rounded-xl bg-gray-50 dark:bg-gray-800">
-              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Description</p>
+              <p className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Brief / Notes</p>
               <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{deal.description}</p>
             </div>
           )}
-          {deal.stage === 'closed_lost' && deal.closed_lost_reason && (
+          {deal.stage === 'lost' && deal.closed_lost_reason && (
             <div className="p-3 rounded-xl bg-brand-50 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900">
               <p className="text-xs font-medium text-brand-600 mb-1">Lost Reason</p>
               <p className="text-sm text-brand-700 dark:text-brand-400">{deal.closed_lost_reason}</p>
@@ -99,7 +109,9 @@ export function DealSlideOver({ deal, accounts, open, onClose, onEdit }: DealSli
         </div>
       )}
 
-      {tab === 'Activity' && (
+      {tab === 'Deliverables' && <DeliverablesList dealId={deal.id} />}
+
+      {tab === 'Messages' && (
         <ActivityFeed activities={activities} dealId={deal.id} onLog={handleLog} />
       )}
 

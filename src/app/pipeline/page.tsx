@@ -16,7 +16,7 @@ export default function PipelinePage() {
   const { accounts } = useAccounts();
   const [selectedDeal, setSelectedDeal] = useState<Deal | null>(null);
   const [showNewDeal, setShowNewDeal] = useState(false);
-  const [defaultStage, setDefaultStage] = useState<DealStage>('lead_captured');
+  const [defaultStage, setDefaultStage] = useState<DealStage>('enquiry');
   const [editingDeal, setEditingDeal] = useState<Deal | null>(null);
 
   const handleAddDeal = (stage: DealStage) => {
@@ -50,12 +50,12 @@ export default function PipelinePage() {
     <div>
       <PageHeader
         title="Pipeline"
-        description="Drag deals across stages to track your creative projects."
+        description="Drag projects across stages — Enquiry → Delivered."
         action={
           <div className="flex gap-2">
             <Button variant="secondary" size="sm" onClick={refetch}><RefreshCw size={14} /></Button>
-            <Button size="sm" onClick={() => { setDefaultStage('lead_captured'); setShowNewDeal(true); }}>
-              <Plus size={14} /> New Deal
+            <Button size="sm" onClick={() => { setDefaultStage('enquiry'); setShowNewDeal(true); }}>
+              <Plus size={14} /> New Project
             </Button>
           </div>
         }
@@ -68,7 +68,6 @@ export default function PipelinePage() {
         onAddDeal={handleAddDeal}
       />
 
-      {/* Deal detail slide-over */}
       <DealSlideOver
         deal={selectedDeal}
         accounts={accounts}
@@ -77,8 +76,7 @@ export default function PipelinePage() {
         onEdit={(deal) => { setEditingDeal(deal); setSelectedDeal(null); }}
       />
 
-      {/* New deal modal */}
-      <Modal open={showNewDeal} onClose={() => setShowNewDeal(false)} title="New Deal" size="md">
+      <Modal open={showNewDeal} onClose={() => setShowNewDeal(false)} title="New Project" size="md">
         <DealForm
           accounts={accounts}
           defaultStage={defaultStage}
@@ -87,8 +85,7 @@ export default function PipelinePage() {
         />
       </Modal>
 
-      {/* Edit deal modal */}
-      <Modal open={!!editingDeal} onClose={() => setEditingDeal(null)} title="Edit Deal" size="md">
+      <Modal open={!!editingDeal} onClose={() => setEditingDeal(null)} title="Edit Project" size="md">
         {editingDeal && (
           <DealForm
             initial={editingDeal}

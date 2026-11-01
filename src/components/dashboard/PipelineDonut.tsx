@@ -6,12 +6,13 @@ import { formatCurrency } from '@/lib/utils/format';
 import { useMemo } from 'react';
 
 const stageColors: Record<string, string> = {
-  lead_captured:     '#6b7280',
-  discovery_scoping: '#60a5fa',
-  proposal_sent:     '#fb923c',
-  negotiation:       '#fbbf24',
-  closed_won:        '#34d399',
-  closed_lost:       '#e11d48',
+  enquiry:      '#6b7280',
+  quote_sent:   '#60a5fa',
+  deposit_paid: '#fbbf24',
+  in_production:'#fb923c',
+  ready:        '#2dd4bf',
+  delivered:    '#34d399',
+  lost:         '#e11d48',
 };
 
 export function PipelineDonut({ deals }: { deals: Deal[] }) {
@@ -34,7 +35,7 @@ export function PipelineDonut({ deals }: { deals: Deal[] }) {
         <PieChart>
           <Pie data={data} cx="50%" cy="50%" innerRadius={55} outerRadius={80} paddingAngle={3} dataKey="value">
             {data.map((entry) => (
-              <Cell key={entry.key} fill={stageColors[entry.key]} />
+              <Cell key={entry.key} fill={stageColors[entry.key] ?? '#6b7280'} />
             ))}
           </Pie>
           <Tooltip

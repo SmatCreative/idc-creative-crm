@@ -1,36 +1,37 @@
 export type DealStage =
-  | 'lead_captured'
-  | 'discovery_scoping'
-  | 'proposal_sent'
-  | 'negotiation'
-  | 'closed_won'
-  | 'closed_lost';
+  | 'enquiry'
+  | 'quote_sent'
+  | 'deposit_paid'
+  | 'in_production'
+  | 'ready'
+  | 'delivered'
+  | 'lost';
 
-export type ProjectType =
-  | 'Branding'
-  | 'Web Design'
-  | 'Campaign'
-  | 'Retainer'
+export type ServiceType =
+  | 'Physical Branding'
   | 'Social Media'
-  | 'Video Production'
-  | 'Photography'
-  | 'Copywriting'
-  | 'Strategy'
+  | 'Digital Marketing'
+  | 'One-Off Design'
+  | 'Bundle'
   | 'Other';
 
 export type ActivityType =
-  | 'Email'
+  | 'WhatsApp'
   | 'Call'
-  | 'Pitch Meeting'
-  | 'Review'
+  | 'Meeting'
+  | 'Email'
   | 'Note'
-  | 'Task Completed';
+  | 'Update';
+
+export type DeliverableStatus = 'pending' | 'in_progress' | 'done';
 
 export interface Account {
   id: string;
   company_name: string;
   industry: string | null;
   website: string | null;
+  whatsapp: string | null;
+  email: string | null;
   total_lifetime_value: number;
   notes: string | null;
   created_at: string;
@@ -43,6 +44,7 @@ export interface Contact {
   role: string | null;
   email: string | null;
   phone: string | null;
+  whatsapp: string | null;
   account_id: string | null;
   notes: string | null;
   created_at: string;
@@ -54,9 +56,10 @@ export interface Deal {
   id: string;
   deal_name: string;
   account_id: string | null;
-  project_type: ProjectType;
+  service_type: ServiceType;
   estimated_value: number;
   stage: DealStage;
+  goal: string | null;
   target_launch_date: string | null;
   closed_lost_reason: string | null;
   description: string | null;
@@ -90,21 +93,73 @@ export interface Task {
   contact?: Contact;
 }
 
-export const DEAL_STAGES: { key: DealStage; label: string; description: string; color: string }[] = [
-  { key: 'lead_captured', label: 'Lead Captured', description: 'Inbound inquiries & RFPs', color: 'slate' },
-  { key: 'discovery_scoping', label: 'Discovery & Scoping', description: 'Understanding project briefs', color: 'blue' },
-  { key: 'proposal_sent', label: 'Proposal Sent', description: 'Pitch deck & pricing delivered', color: 'violet' },
-  { key: 'negotiation', label: 'Negotiation', description: 'Contracting & scope tweaks', color: 'amber' },
-  { key: 'closed_won', label: 'Closed Won', description: 'Deposit paid — in production', color: 'emerald' },
-  { key: 'closed_lost', label: 'Closed Lost', description: 'Archived with reason', color: 'red' },
+export interface Deliverable {
+  id: string;
+  deal_id: string;
+  title: string;
+  description: string | null;
+  due_date: string | null;
+  status: DeliverableStatus;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface Supplier {
+  id: string;
+  company_name: string;
+  contact_person: string | null;
+  whatsapp: string | null;
+  email: string | null;
+  location: string | null;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface SupplierProduct {
+  id: string;
+  supplier_id: string;
+  product_name: string;
+  category: string | null;
+  unit: string;
+  cost_price: number;
+  markup_percent: number;
+  notes: string | null;
+  created_at: string;
+  updated_at: string;
+  supplier?: Supplier;
+}
+
+export const DEAL_STAGES: {
+  key: DealStage;
+  label: string;
+  description: string;
+  color: string;
+}[] = [
+  { key: 'enquiry',       label: 'Enquiry',         description: 'New enquiry received via WhatsApp or email', color: 'gray' },
+  { key: 'quote_sent',    label: 'Quote Sent',       description: 'Quote/proposal sent to client',              color: 'blue' },
+  { key: 'deposit_paid',  label: 'Deposit Paid',     description: '50% deposit received, design started',       color: 'amber' },
+  { key: 'in_production', label: 'In Production',    description: 'Job is being produced/manufactured',         color: 'orange' },
+  { key: 'ready',         label: 'Ready',            description: 'Ready for delivery or collection',           color: 'teal' },
+  { key: 'delivered',     label: 'Delivered',        description: 'Delivered/installed, balance outstanding',   color: 'emerald' },
+  { key: 'lost',          label: 'Lost',             description: 'Deal lost',                                  color: 'red' },
 ];
 
-export const PROJECT_TYPES: ProjectType[] = [
-  'Branding', 'Web Design', 'Campaign', 'Retainer',
-  'Social Media', 'Video Production', 'Photography',
-  'Copywriting', 'Strategy', 'Other',
+export const SERVICE_TYPES: ServiceType[] = [
+  'Physical Branding',
+  'Social Media',
+  'Digital Marketing',
+  'One-Off Design',
+  'Bundle',
+  'Other',
 ];
 
 export const ACTIVITY_TYPES: ActivityType[] = [
-  'Email', 'Call', 'Pitch Meeting', 'Review', 'Note', 'Task Completed',
+  'WhatsApp',
+  'Call',
+  'Meeting',
+  'Email',
+  'Note',
+  'Update',
 ];

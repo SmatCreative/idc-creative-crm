@@ -1,48 +1,46 @@
 import { cn } from '@/lib/utils/cn';
-import type { DealStage, ProjectType } from '@/lib/supabase/types';
+import type { DealStage, ServiceType } from '@/lib/supabase/types';
 
 const stageStyles: Record<DealStage, string> = {
-  lead_captured:     'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-200',
-  discovery_scoping: 'bg-blue-100 text-blue-700 dark:bg-blue-900/40 dark:text-blue-300',
-  proposal_sent:     'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-  negotiation:       'bg-amber-100 text-amber-700 dark:bg-amber-900/40 dark:text-amber-300',
-  closed_won:        'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/40 dark:text-emerald-300',
-  closed_lost:       'bg-red-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300',
+  enquiry:      'bg-gray-100 text-gray-700 dark:bg-gray-800 dark:text-gray-300',
+  quote_sent:   'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  deposit_paid: 'bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400',
+  in_production:'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
+  ready:        'bg-teal-100 text-teal-700 dark:bg-teal-900/30 dark:text-teal-400',
+  delivered:    'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/30 dark:text-emerald-400',
+  lost:         'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
 };
 
 const stageLabels: Record<DealStage, string> = {
-  lead_captured:     'Lead Captured',
-  discovery_scoping: 'Discovery',
-  proposal_sent:     'Proposal Sent',
-  negotiation:       'Negotiation',
-  closed_won:        'Closed Won',
-  closed_lost:       'Closed Lost',
+  enquiry:      'Enquiry',
+  quote_sent:   'Quote Sent',
+  deposit_paid: 'Deposit Paid',
+  in_production:'In Production',
+  ready:        'Ready',
+  delivered:    'Delivered',
+  lost:         'Lost',
 };
 
-export function StageBadge({ stage }: { stage: DealStage }) {
+export function StageBadge({ stage, className }: { stage: DealStage; className?: string }) {
   return (
-    <span className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', stageStyles[stage])}>
+    <span className={cn('inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium', stageStyles[stage], className)}>
       {stageLabels[stage]}
     </span>
   );
 }
 
-const typeColors: Record<string, string> = {
-  Branding:          'bg-brand-100 text-brand-700 dark:bg-brand-900/40 dark:text-brand-300',
-  'Web Design':      'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
-  Campaign:          'bg-orange-100 text-orange-700 dark:bg-orange-900/40 dark:text-orange-300',
-  Retainer:          'bg-teal-100 text-teal-700 dark:bg-teal-900/40 dark:text-teal-300',
-  'Social Media':    'bg-sky-100 text-sky-700 dark:bg-sky-900/40 dark:text-sky-300',
-  'Video Production':'bg-purple-100 text-purple-700 dark:bg-purple-900/40 dark:text-purple-300',
-  Photography:       'bg-rose-100 text-rose-700 dark:bg-rose-900/40 dark:text-rose-300',
-  Copywriting:       'bg-lime-100 text-lime-700 dark:bg-lime-900/40 dark:text-lime-300',
-  Strategy:          'bg-cyan-100 text-cyan-700 dark:bg-cyan-900/40 dark:text-cyan-300',
-  Other:             'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300',
+const serviceStyles: Record<ServiceType, string> = {
+  'Physical Branding':  'bg-purple-100 text-purple-700 dark:bg-purple-900/30 dark:text-purple-400',
+  'Social Media':       'bg-pink-100 text-pink-700 dark:bg-pink-900/30 dark:text-pink-400',
+  'Digital Marketing':  'bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400',
+  'One-Off Design':     'bg-indigo-100 text-indigo-700 dark:bg-indigo-900/30 dark:text-indigo-400',
+  'Bundle':             'bg-brand-100 text-brand-700 dark:bg-brand-900/30 dark:text-brand-400',
+  'Other':              'bg-gray-100 text-gray-600 dark:bg-gray-800 dark:text-gray-400',
 };
 
-export function ProjectTypeBadge({ type }: { type: ProjectType }) {
+export function ServiceTypeBadge({ type, className }: { type: ServiceType; className?: string }) {
   return (
-    <span className={cn('inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium', typeColors[type] ?? typeColors.Other)}>
+    <span className={cn('inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium', serviceStyles[type], className)}>
       {type}
     </span>
   );

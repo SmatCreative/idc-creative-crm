@@ -7,7 +7,7 @@ import { DealForm } from '@/components/deals/DealForm';
 import { Modal } from '@/components/ui/Modal';
 import { PageHeader } from '@/components/layout/PageHeader';
 import { Button } from '@/components/ui/Button';
-import { StageBadge, ProjectTypeBadge } from '@/components/ui/Badge';
+import { StageBadge, ServiceTypeBadge } from '@/components/ui/Badge';
 import { EmptyState } from '@/components/ui/EmptyState';
 import { formatCurrency, formatDate } from '@/lib/utils/format';
 import type { Deal, DealStage } from '@/lib/supabase/types';
@@ -24,6 +24,7 @@ export default function DealsPage() {
   const [search, setSearch] = useState('');
   const [filterStage, setFilterStage] = useState<DealStage | ''>('');
 
+  const activeDeals = deals.filter(d => !['delivered', 'lost'].includes(d.stage));
   const filtered = deals.filter((d) => {
     const matchSearch = !search || d.deal_name.toLowerCase().includes(search.toLowerCase()) || d.account?.company_name?.toLowerCase().includes(search.toLowerCase());
     const matchStage = !filterStage || d.stage === filterStage;
@@ -44,16 +45,16 @@ export default function DealsPage() {
   return (
     <div>
       <PageHeader
-        title="Deals"
-        description={`${deals.length} deals • ${formatCurrency(deals.filter(d => !['closed_won','closed_lost'].includes(d.stage)).reduce((s,d) => s + d.estimated_value, 0))} pipeline`}
-        action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Deal</Button>}
+        title="Projects"
+        description={`${deals.length} projects · ${formatCurrency(activeDeals.reduce((s, d) => s + d.estimated_value, 0))} active pipeline`}
+        action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Project</Button>}
       />
 
       {/* Filters */}
       <div className="flex gap-3 mb-5">
         <div className="relative flex-1 max-w-xs">
           <Search size={14} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
-          <Input className="pl-8" placeholder="Search deals…" value={search} onChange={(e) => setSearch(e.target.value)} />
+          <Input className="pl-8" placeholder="Search projects…" value={search} onChange={(e) => setSearch(e.target.value)} />
         </div>
         <select
           value={filterStage}
@@ -68,17 +69,17 @@ export default function DealsPage() {
       {loading ? (
         <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (
-        <EmptyState icon={Briefcase} title="No deals found" description="Create your first deal or adjust your filters." action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Deal</Button>} />
+        <EmptyState icon={Briefcase} title="No projects found" description="Create your first project or adjust your filters." action={<Button size="sm" onClick={() => setShowNew(true)}><Plus size={14} /> New Project</Button>} />
       ) : (
         <div className="bg-white dark:bg-gray-900 rounded-2xl border border-gray-100 dark:border-gray-800 overflow-hidden shadow-sm">
           <table className="w-full">
             <thead>
               <tr className="border-b border-gray-100 dark:border-gray-800">
-                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Deal</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Type</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Project</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Service</th>
                 <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Stage</th>
                 <th className="text-right px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Value</th>
-                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Launch</th>
+                <th className="text-left px-5 py-3 text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Delivery</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50 dark:divide-gray-800">
@@ -92,7 +93,7 @@ export default function DealsPage() {
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">{deal.deal_name}</p>
                     <p className="text-xs text-gray-400 dark:text-gray-500">{deal.account?.company_name ?? '—'}</p>
                   </td>
-                  <td className="px-5 py-3.5"><ProjectTypeBadge type={deal.project_type} /></td>
+                  <td className="px-5 py-3.5"><ServiceTypeBadge type={deal.service_type} /></td>
                   <td className="px-5 py-3.5"><StageBadge stage={deal.stage} /></td>
                   <td className="px-5 py-3.5 text-right">
                     <span className="text-sm font-bold text-gray-800 dark:text-gray-200">{formatCurrency(deal.estimated_value)}</span>
@@ -113,11 +114,11 @@ export default function DealsPage() {
         onEdit={(deal) => { setEditingDeal(deal); setSelectedDeal(null); }}
       />
 
-      <Modal open={showNew} onClose={() => setShowNew(false)} title="New Deal" size="md">
+      <Modal open={showNew} onClose={() => setShowNew(false)} title="New Project" size="md">
         <DealForm accounts={accounts} onSubmit={handleCreate} onCancel={() => setShowNew(false)} />
       </Modal>
 
-      <Modal open={!!editingDeal} onClose={() => setEditingDeal(null)} title="Edit Deal" size="md">
+      <Modal open={!!editingDeal} onClose={() => setEditingDeal(null)} title="Edit Project" size="md">
         {editingDeal && (
           <DealForm initial={editingDeal} accounts={accounts} onSubmit={handleEdit} onCancel={() => setEditingDeal(null)} />
         )}

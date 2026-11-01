@@ -9,7 +9,7 @@ import { RevenueChart } from '@/components/dashboard/RevenueChart';
 import { RecentDeals } from '@/components/dashboard/RecentDeals';
 import { PipelineDonut } from '@/components/dashboard/PipelineDonut';
 import { formatCurrency } from '@/lib/utils/format';
-import { DollarSign, Briefcase, TrendingUp, CheckSquare, Building2, Trophy } from 'lucide-react';
+import { DollarSign, Briefcase, Factory, Building2, CheckSquare, Banknote } from 'lucide-react';
 
 export default function DashboardPage() {
   const { deals, loading } = useDeals();
@@ -17,17 +17,33 @@ export default function DashboardPage() {
   const { tasks } = useTasks();
 
   const stats = useMemo(() => {
-    const activeDeals = deals.filter((d) => !['closed_won', 'closed_lost'].includes(d.stage));
+    const activeDeals = deals.filter((d) => !['delivered', 'lost'].includes(d.stage));
     const pipelineValue = activeDeals.reduce((sum, d) => sum + d.estimated_value, 0);
-    const wonDeals = deals.filter((d) => d.stage === 'closed_won');
-    const lostDeals = deals.filter((d) => d.stage === 'closed_lost');
-    const winRate = wonDeals.length + lostDeals.length > 0
-      ? Math.round((wonDeals.length / (wonDeals.length + lostDeals.length)) * 100)
-      : 0;
-    const closedRevenue = wonDeals.reduce((sum, d) => sum + d.estimated_value, 0);
+
+    const inProduction = deals.filter((d) => d.stage === 'in_production');
+    const productionValue = inProduction.reduce((sum, d) => sum + d.estimated_value, 0);
+
+    const depositPaid = deals.filter((d) => ['deposit_paid', 'in_production', 'ready'].includes(d.stage));
+    const depositsReceived = depositPaid.reduce((sum, d) => sum + d.estimated_value * 0.5, 0);
+
+    const delivered = deals.filter((d) => d.stage === 'delivered');
+    const deliveredRevenue = delivered.reduce((sum, d) => sum + d.estimated_value, 0);
+
+    const socialDeals = activeDeals.filter((d) => d.service_type === 'Social Media');
+    const socialMRR = socialDeals.reduce((sum, d) => sum + d.estimated_value, 0);
+
     const pendingTasks = tasks.filter((t) => !t.completed).length;
 
-    return { pipelineValue, activeCount: activeDeals.length, winRate, closedRevenue, pendingTasks };
+    return {
+      pipelineValue,
+      activeCount: activeDeals.length,
+      inProductionCount: inProduction.length,
+      productionValue,
+      depositsReceived,
+      deliveredRevenue,
+      socialMRR,
+      pendingTasks,
+    };
   }, [deals, tasks]);
 
   if (loading) {
@@ -42,50 +58,51 @@ export default function DashboardPage() {
     <div className="space-y-6">
       <PageHeader
         title="Dashboard"
-        description="Welcome back — here's your agency pipeline at a glance."
+        description="SmatCreative — Design, Print, Signage, Social."
       />
 
-      {/* Stats row */}
+      {/* Stats row 1 */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
         <StatCard
-          title="Total Pipeline"
+          title="Active Pipeline"
           value={formatCurrency(stats.pipelineValue)}
-          change="Active opportunities"
+          change={`${stats.activeCount} active projects`}
           icon={DollarSign}
           iconColor="text-brand-600 dark:text-brand-400"
           iconBg="bg-brand-50 dark:bg-brand-950"
         />
         <StatCard
-          title="Active Deals"
-          value={String(stats.activeCount)}
-          change="In pipeline"
-          icon={Briefcase}
-          iconColor="text-blue-600 dark:text-blue-400"
-          iconBg="bg-blue-50 dark:bg-blue-950"
+          title="In Production"
+          value={String(stats.inProductionCount)}
+          change={formatCurrency(stats.productionValue) + ' value'}
+          icon={Factory}
+          iconColor="text-orange-600 dark:text-orange-400"
+          iconBg="bg-orange-50 dark:bg-orange-950"
         />
         <StatCard
-          title="Win Rate"
-          value={`${stats.winRate}%`}
-          change="Closed-Won vs Lost"
-          changePositive={stats.winRate >= 50}
-          icon={Trophy}
+          title="Deposits Received"
+          value={formatCurrency(stats.depositsReceived)}
+          change="50% of jobs in progress"
+          changePositive
+          icon={Banknote}
           iconColor="text-amber-600 dark:text-amber-400"
           iconBg="bg-amber-50 dark:bg-amber-950"
         />
         <StatCard
-          title="Closed Revenue"
-          value={formatCurrency(stats.closedRevenue)}
-          change="All time won deals"
-          icon={TrendingUp}
+          title="Delivered Revenue"
+          value={formatCurrency(stats.deliveredRevenue)}
+          change="All delivered jobs"
+          changePositive={stats.deliveredRevenue > 0}
+          icon={Briefcase}
           iconColor="text-emerald-600 dark:text-emerald-400"
           iconBg="bg-emerald-50 dark:bg-emerald-950"
         />
       </div>
 
-      {/* Second row */}
-      <div className="grid grid-cols-2 gap-4">
+      {/* Stats row 2 */}
+      <div className="grid grid-cols-2 lg:grid-cols-3 gap-4">
         <StatCard
-          title="Accounts"
+          title="Clients"
           value={String(accounts.length)}
           change="Client companies"
           icon={Building2}
@@ -93,9 +110,18 @@ export default function DashboardPage() {
           iconBg="bg-gray-100 dark:bg-gray-800"
         />
         <StatCard
+          title="Social Media MRR"
+          value={formatCurrency(stats.socialMRR)}
+          change="Active social retainers"
+          changePositive={stats.socialMRR > 0}
+          icon={DollarSign}
+          iconColor="text-pink-600 dark:text-pink-400"
+          iconBg="bg-pink-50 dark:bg-pink-950"
+        />
+        <StatCard
           title="Open Tasks"
           value={String(stats.pendingTasks)}
-          change="Across all deals"
+          change="Across all projects"
           icon={CheckSquare}
           iconColor="text-brand-600 dark:text-brand-400"
           iconBg="bg-brand-50 dark:bg-brand-950"
@@ -110,7 +136,7 @@ export default function DashboardPage() {
         <PipelineDonut deals={deals} />
       </div>
 
-      {/* Recent deals */}
+      {/* Recent projects */}
       <RecentDeals deals={deals} />
     </div>
   );
