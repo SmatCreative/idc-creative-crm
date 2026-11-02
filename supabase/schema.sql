@@ -75,8 +75,10 @@ end $$;
 create table if not exists accounts (
   id                    uuid primary key default uuid_generate_v4(),
   company_name          text not null,
+  contact_person        text,
   industry              text,
   website               text,
+  phone                 text,
   whatsapp              text,
   email                 text,
   total_lifetime_value  numeric(12,2) default 0,

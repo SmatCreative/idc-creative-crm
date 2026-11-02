@@ -16,8 +16,12 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
   const todayStr = new Date().toISOString().slice(0, 10);
   const [form, setForm] = useState({
     company_name: initial?.company_name ?? '',
+    contact_person: initial?.contact_person ?? '',
     industry: initial?.industry ?? '',
     website: initial?.website ?? '',
+    phone: initial?.phone ?? '',
+    whatsapp: initial?.whatsapp ?? '',
+    email: initial?.email ?? '',
     notes: initial?.notes ?? '',
     since_date: initial?.created_at ? initial.created_at.slice(0, 10) : todayStr,
   });
@@ -31,8 +35,12 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
       const { since_date, ...rest } = form;
       await onSubmit({
         ...rest,
+        contact_person: rest.contact_person || null,
         industry: rest.industry || null,
         website: rest.website || null,
+        phone: rest.phone || null,
+        whatsapp: rest.whatsapp || null,
+        email: rest.email || null,
         notes: rest.notes || null,
         created_at: since_date ? new Date(since_date).toISOString() : undefined,
       });
@@ -43,16 +51,36 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <FormGroup>
-        <Label htmlFor="company_name">Company Name *</Label>
-        <Input id="company_name" required value={form.company_name} onChange={(e) => set('company_name', e.target.value)} placeholder="Acme Corp" />
+        <Label htmlFor="company_name">Company / Client Name *</Label>
+        <Input id="company_name" required value={form.company_name} onChange={(e) => set('company_name', e.target.value)} placeholder="e.g. Acme Corp or John Smith" />
       </FormGroup>
       <div className="grid grid-cols-2 gap-3">
+        <FormGroup>
+          <Label htmlFor="contact_person">Contact Person</Label>
+          <Input id="contact_person" value={form.contact_person} onChange={(e) => set('contact_person', e.target.value)} placeholder="Full name" />
+        </FormGroup>
         <FormGroup>
           <Label htmlFor="industry">Industry</Label>
           <select id="industry" value={form.industry} onChange={(e) => set('industry', e.target.value)} className="w-full rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 text-slate-900 dark:text-slate-100 text-sm px-3 py-2 focus:outline-none focus:ring-2 focus:ring-brand-500">
             <option value="">Select…</option>
             {industries.map((i) => <option key={i} value={i}>{i}</option>)}
           </select>
+        </FormGroup>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <FormGroup>
+          <Label htmlFor="phone">Phone</Label>
+          <Input id="phone" value={form.phone} onChange={(e) => set('phone', e.target.value)} placeholder="+263 77 000 0000" />
+        </FormGroup>
+        <FormGroup>
+          <Label htmlFor="whatsapp">WhatsApp</Label>
+          <Input id="whatsapp" value={form.whatsapp} onChange={(e) => set('whatsapp', e.target.value)} placeholder="+263 77 000 0000" />
+        </FormGroup>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <FormGroup>
+          <Label htmlFor="email">Email</Label>
+          <Input id="email" type="email" value={form.email} onChange={(e) => set('email', e.target.value)} placeholder="client@example.com" />
         </FormGroup>
         <FormGroup>
           <Label htmlFor="website">Website</Label>

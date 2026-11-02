@@ -9,7 +9,7 @@ import { EmptyState } from '@/components/ui/EmptyState';
 import { Avatar } from '@/components/ui/Avatar';
 import { formatCurrency } from '@/lib/utils/format';
 import type { Account } from '@/lib/supabase/types';
-import { Plus, Building2, Search, Globe, Edit2 } from 'lucide-react';
+import { Plus, Building2, Search, Globe, Edit2, User, Phone, Mail } from 'lucide-react';
 import { Input } from '@/components/ui/Input';
 
 export default function AccountsPage() {
@@ -59,7 +59,10 @@ export default function AccountsPage() {
                   <Avatar name={account.company_name} size="md" />
                   <div>
                     <p className="text-sm font-semibold text-gray-900 dark:text-white">{account.company_name}</p>
-                    {account.industry && <p className="text-xs text-gray-400 dark:text-gray-500">{account.industry}</p>}
+                    {account.contact_person && (
+                      <p className="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-1"><User size={10} />{account.contact_person}</p>
+                    )}
+                    {!account.contact_person && account.industry && <p className="text-xs text-gray-400 dark:text-gray-500">{account.industry}</p>}
                   </div>
                 </div>
                 <button
@@ -69,6 +72,18 @@ export default function AccountsPage() {
                   <Edit2 size={13} />
                 </button>
               </div>
+              {(account.phone || account.whatsapp || account.email) && (
+                <div className="flex flex-wrap gap-x-3 gap-y-1 mb-3 text-xs text-gray-500 dark:text-gray-400">
+                  {(account.phone || account.whatsapp) && (
+                    <span className="flex items-center gap-1"><Phone size={10} />{account.phone || account.whatsapp}</span>
+                  )}
+                  {account.email && (
+                    <a href={`mailto:${account.email}`} onClick={(e) => e.stopPropagation()} className="flex items-center gap-1 hover:text-brand-600 dark:hover:text-brand-400">
+                      <Mail size={10} />{account.email}
+                    </a>
+                  )}
+                </div>
+              )}
               <div className="flex items-center justify-between pt-3 border-t border-gray-50 dark:border-gray-800">
                 <div>
                   <p className="text-xs text-gray-400 dark:text-gray-500">Lifetime Value</p>

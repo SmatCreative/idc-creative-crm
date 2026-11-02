@@ -22,8 +22,17 @@ export function useAccounts() {
   useEffect(() => { fetch(); }, [fetch]);
 
   const create = async (values: Omit<Account, 'id' | 'updated_at' | 'created_at'> & { created_at?: string }) => {
-    const { data, error } = await supabase.from('accounts').insert(values).select().single();
+    const { created_at, ...insertValues } = values;
+    const { data, error } = await supabase.from('accounts').insert(insertValues).select().single();
     if (error) throw error;
+    if (created_at) {
+      const { data: backdated, error: e2 } = await supabase
+        .from('accounts').update({ created_at }).eq('id', data.id).select().single();
+      if (!e2 && backdated) {
+        setAccounts((prev) => [...prev, backdated]);
+        return backdated;
+      }
+    }
     setAccounts((prev) => [...prev, data]);
     return data;
   };

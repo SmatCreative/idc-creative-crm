@@ -28,8 +28,10 @@ export type DeliverableStatus = 'pending' | 'in_progress' | 'done';
 export interface Account {
   id: string;
   company_name: string;
+  contact_person: string | null;
   industry: string | null;
   website: string | null;
+  phone: string | null;
   whatsapp: string | null;
   email: string | null;
   total_lifetime_value: number;
