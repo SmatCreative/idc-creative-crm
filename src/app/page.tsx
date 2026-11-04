@@ -8,8 +8,9 @@ import { RecentDeals } from '@/components/dashboard/RecentDeals';
 import { PipelineDonut } from '@/components/dashboard/PipelineDonut';
 
 export default function DashboardPage() {
-  const { deals, loading } = useDeals();
-  const { accounts } = useAccounts();
+  const { deals, loading, error: dealsError } = useDeals();
+  const { accounts, error: accountsError } = useAccounts();
+  const dbError = dealsError || accountsError;
 
   if (loading) {
     return (
@@ -25,6 +26,12 @@ export default function DashboardPage() {
         title="Dashboard"
         description="SmatCreative — Design, Print, Signage, Social."
       />
+      {dbError && (
+        <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+          <strong>Database connection error:</strong> {dbError}
+          <div className="mt-1 text-xs opacity-70">Supabase URL: {process.env.NEXT_PUBLIC_SUPABASE_URL?.slice(0, 50) ?? 'NOT SET'}</div>
+        </div>
+      )}
 
       {/* Business KPIs */}
       <BusinessKPIs deals={deals} accounts={accounts} />

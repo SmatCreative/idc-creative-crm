@@ -28,12 +28,14 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
     project_date: initial?.created_at ? initial.created_at.slice(0, 10) : todayStr,
   });
   const [loading, setLoading] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
 
   const set = (key: string, value: unknown) => setForm((prev) => ({ ...prev, [key]: value }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSaveError(null);
     try {
       const { project_date, ...rest } = form;
       await onSubmit({
@@ -45,6 +47,9 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
         estimated_value: Number(rest.estimated_value),
         created_at: project_date ? new Date(project_date).toISOString() : undefined,
       });
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setSaveError(msg);
     } finally {
       setLoading(false);
     }
@@ -115,6 +120,11 @@ export function DealForm({ initial, accounts, defaultStage = 'enquiry', onSubmit
         </FormGroup>
       )}
 
+      {saveError && (
+        <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-3 py-2 text-xs text-red-700 dark:text-red-400 break-all">
+          <strong>Error:</strong> {saveError}
+        </div>
+      )}
       <div className="flex gap-3 pt-2">
         <Button type="submit" disabled={loading} className="flex-1">
           {loading ? 'Saving…' : initial?.id ? 'Save Changes' : 'Create Project'}

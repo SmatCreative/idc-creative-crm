@@ -13,7 +13,7 @@ import { Plus, Building2, Search, Globe, Edit2, User, Phone, Mail } from 'lucide
 import { Input } from '@/components/ui/Input';
 
 export default function AccountsPage() {
-  const { accounts, loading, create, update } = useAccounts();
+  const { accounts, loading, error: fetchError, create, update } = useAccounts();
   const [showNew, setShowNew] = useState(false);
   const [editing, setEditing] = useState<Account | null>(null);
   const [search, setSearch] = useState('');
@@ -46,6 +46,11 @@ export default function AccountsPage() {
         <Input className="pl-8" placeholder="Search accounts…" value={search} onChange={(e) => setSearch(e.target.value)} />
       </div>
 
+      {fetchError && (
+        <div className="mb-4 rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-700 dark:text-red-400">
+          <strong>Database error:</strong> {fetchError}
+        </div>
+      )}
       {loading ? (
         <div className="flex justify-center py-16"><div className="w-6 h-6 border-2 border-brand-600 border-t-transparent rounded-full animate-spin" /></div>
       ) : filtered.length === 0 ? (

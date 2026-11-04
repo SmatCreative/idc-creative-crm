@@ -26,11 +26,13 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
     since_date: initial?.created_at ? initial.created_at.slice(0, 10) : todayStr,
   });
   const [loading, setLoading] = useState(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
   const set = (k: string, v: string) => setForm((p) => ({ ...p, [k]: v }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
+    setSaveError(null);
     try {
       const { since_date, ...rest } = form;
       await onSubmit({
@@ -44,8 +46,10 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
         notes: rest.notes || null,
         created_at: since_date ? new Date(since_date).toISOString() : undefined,
       });
-    }
-    finally { setLoading(false); }
+    } catch (err: unknown) {
+      const msg = err instanceof Error ? err.message : String(err);
+      setSaveError(msg);
+    } finally { setLoading(false); }
   };
 
   return (
@@ -96,6 +100,11 @@ export function AccountForm({ initial, onSubmit, onCancel }: AccountFormProps) {
         <Label htmlFor="notes">Notes</Label>
         <Textarea id="notes" rows={3} value={form.notes} onChange={(e) => set('notes', e.target.value)} placeholder="Key contacts, backstory..." />
       </FormGroup>
+      {saveError && (
+        <div className="rounded-lg bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-3 py-2 text-xs text-red-700 dark:text-red-400 break-all">
+          <strong>Error:</strong> {saveError}
+        </div>
+      )}
       <div className="flex gap-3 pt-2">
         <Button type="submit" disabled={loading} className="flex-1">{loading ? 'Saving…' : initial?.id ? 'Save Changes' : 'Create Account'}</Button>
         <Button type="button" variant="secondary" onClick={onCancel}>Cancel</Button>
